@@ -1,20 +1,29 @@
-import React from 'react'
-import PostComment from './PostComment'
-import comments from '../data/comments'
+import React, { Component } from 'react';
+import PostComment from './PostComment';
 
+export default class PostComments extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: []
+    };
+  }
 
-export default function PostComments(props) {
-	const postId = props.postId;
-  return (
-    <div>
-			<h3 className="uk-margin-remove-top">Comments:</h3>
-			<div className="uk-comments">
-				{comments.map(comment =>{
-					if(postId == comment.postId){
-						return <PostComment comment={comment}/>
-					}
-				})}
-			</div>	
-		</div>
-  )
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      comments: nextProps.comments
+    });
+  }
+  render() {
+    return (
+      <div>
+        <h3 className="uk-margin-remove-top">Comments:</h3>
+        <div className="uk-comments">
+          {this.state.comments.map(comment => {
+            return <PostComment comment={comment} />;
+          })}
+        </div>
+      </div>
+    );
+  }
 }
